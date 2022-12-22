@@ -1,28 +1,33 @@
 <script setup>
-import { getProductList } from '@/api/home.js';
-import { query } from '../utils/query';
+import { onMounted, ref } from 'vue';
+import { getProductList, getCarouselChartData } from '@/api/home.js';
 
-const onClick = async () => {
-  console.log(
-    query({
-      keyword: '',
-      limit: 10,
-      page: 1,
-      sort: 'price_down',
-    })
-  );
-  const res = await getProductList({
-    keyword: '',
-    limit: 10,
-    page: 1,
-    sort: 'price_down',
-  });
-  console.log(res);
-  console.log('s');
-};
+const carouselChartData = ref([]);
+
+onMounted(async () => {
+  carouselChartData.value = (
+    await getCarouselChartData({ limit: 10, page: 1 })
+  ).data.list;
+  console.table(carouselChartData.value);
+});
+
 </script>
 
 <template>
-  <div>首页</div>
-  <van-button @click="onClick" type="primary">主要按钮</van-button>
+  <div>
+    <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+      <van-swipe-item v-for="item in carouselChartData" :key="item.id"
+        ><img :src="item.pic_url" :alt="item.pic_url"
+      /></van-swipe-item>
+    </van-swipe>
+  </div>
 </template>
+
+<style lang="scss" scoped>
+.my-swipe .van-swipe-item {
+  width: 100%;
+  img {
+    width: 100%;
+  }
+}
+</style>

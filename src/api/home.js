@@ -1,5 +1,5 @@
-import { query } from '../utils/query';
-import request from '../utils/request';
+import { query } from '@/utils/query';
+import request from '@/utils/request';
 
 /**
  * @description 获取首页商品数据
@@ -13,6 +13,10 @@ export const getProductList = queryObj =>
 
 /**
  * @description 获取轮播图数据
+ * @param {{limit:number,page:number}} queryObj
  */
-export const getCarouselChartData = () =>
-  request({ method: 'POST', url: '/frontend/rotation/list' });
+export const getCarouselChartData = queryObj =>
+  request({
+    method: 'POST',
+    url: '/frontend/rotation/list'.concat('?', query(queryObj)),
+  });

@@ -208,21 +208,20 @@ jsconfig.json	开启路径别名提示
 
 ```js
 {
-    "compilerOptions": {
-        "module": "ESNext",
-        "moduleResolution": "Node",
-        "target": "ESNext",
-        "jsx": "preserve",
-        "strictNullChecks": true,
-        "strictFunctionTypes": true,
-        "paths": {
-            "@/*":["./src/*"]
-        }
-    },
-    "exclude": [
-        "node_modules",
-        "**/node_modules/*"
-    ]
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "target": "ESNext",
+    "jsx": "react",
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*", "src/**/*.vue"],
+  "exclude": ["node_modules", "**/node_modules/*"]
 }
 ```
 
@@ -417,3 +416,57 @@ const request = axios.create({
 export default request;
 ```
 
+配置基本的返回拦截器
+
+```js
+// 添加响应拦截器
+request.interceptors.response.use(
+  res => res.data,
+  error => Promise.reject(error)
+);
+```
+
+### api接口配置
+
+src\api\home.js
+
+```js
+import { query } from '@/utils/query';
+import request from '@/utils/request';
+
+/**
+ * @description 获取轮播图数据
+ * @param {{limit:number,page:number}} queryObj
+ */
+export const getCarouselChartData = queryObj =>
+  request({
+    method: 'POST',
+    url: '/frontend/rotation/list'.concat('?', query(queryObj)),
+  });
+```
+
+我们需要封装一个工具函数把json对象转成query字符串
+
+src\utils\query.js
+
+```js
+/**
+ * @description 对象转query字符串
+ * @param {Record<string,any>} queryObj
+ * @return {string}
+ */
+export const query = queryObj =>
+  Object.keys(queryObj)
+    .map(key =>
+      key.concat(
+        '=',
+        typeof queryObj[key] === 'string'
+          ? queryObj[key]
+          : JSON.stringify(queryObj[key])
+      )
+    )
+    .join('&');
+
+```
+
+## 首页

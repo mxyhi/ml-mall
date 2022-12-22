@@ -16,7 +16,7 @@ const request = axios.create({
   timeout: 15000,
 });
 
-// //添加请求拦截器
+//添加请求拦截器
 // request.interceptors.request.use(
 //   config => {
 //     config.headers.token = getToken();
@@ -27,6 +27,12 @@ const request = axios.create({
 //     return Promise.reject(error);
 //   }
 // );
+
+// 添加响应拦截器
+request.interceptors.response.use(
+  res => res.data,
+  error => Promise.reject(error)
+);
 
 // // 添加响应拦截器
 // request.interceptors.response.use(
