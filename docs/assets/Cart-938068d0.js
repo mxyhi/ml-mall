@@ -1,0 +1,1 @@
+import{_ as e}from"./_plugin-vue_export-helper-c27b6911.js";import{E as r,F as t}from"./index-fb7aa16f.js";const c={};function o(n,a){return r(),t("div",null," 购物车 ")}const f=e(c,[["render",o]]);export{f as default};
