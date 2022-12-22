@@ -22,6 +22,21 @@ export default defineConfig({
     },
   },
   build: {
+    target: 'es6',
     outDir: 'docs',
+    rollupOptions: {
+      output: {
+        sanitizeFileName(fileName) {
+          const match = /^[a-z]:/i.exec(fileName);
+          const driveLetter = match ? match[0] : '';
+          return (
+            driveLetter +
+            fileName
+              .slice(driveLetter.length)
+              .replace(/[\x00-\x1F\x7F<>*#"{}|^[\]`;?:&=+$,]/g, '')
+          );
+        },
+      },
+    },
   },
 });
