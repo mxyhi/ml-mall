@@ -1,8 +1,11 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 
-import App from './App.vue'
-import router from './router'
+import App from './App.vue';
+import router from './router';
+
+// removeAd
+import './assets/removeAd';
 
 // Toast
 import 'vant/es/toast/style';
@@ -14,13 +17,15 @@ import 'vant/es/notify/style';
 import 'vant/es/image-preview/style';
 
 // 引入flexible 适配
-import "./assets/flexible"
+import './assets/flexible';
 // 导入重置样式
-import "./assets/reset.css"
+import './assets/reset.css';
 
-const app = createApp(App)
+import '@/styles/index.scss';
 
-app.use(createPinia())
-app.use(router)
+const app = createApp(App);
 
-app.mount('#app')
+app.use(createPinia());
+app.use(router);
+
+app.mount('#app');

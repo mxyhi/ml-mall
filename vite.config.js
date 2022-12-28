@@ -22,8 +22,7 @@ export default defineConfig({
     },
   },
   build: {
-    target: 'es6',
-    outDir: 'docs',
+    outDir: 'ml-mall',
     rollupOptions: {
       output: {
         sanitizeFileName(fileName) {

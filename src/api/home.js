@@ -20,3 +20,13 @@ export const getCarouselChartData = queryObj =>
     method: 'POST',
     url: '/frontend/rotation/list'.concat('?', query(queryObj)),
   });
+
+/**
+ * @description 获取分类列表
+ * @param {number} parent_id 分类id
+ */
+export const getClassification = parent_id =>
+  request({
+    method: 'POST',
+    url: '/frontend/category/list'.concat('?', query({ parent_id })),
+  });

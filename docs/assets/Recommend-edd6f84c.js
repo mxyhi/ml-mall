@@ -1,1 +1,0 @@
-import{_ as e}from"./plugin-vueexport-helper-c27b6911.js";import{E as c,F as o}from"./index-5457bffa.js";const r={};function n(t,s){return c(),o("div",null," 种草文章 ")}const m=e(r,[["render",n]]);export{m as default};

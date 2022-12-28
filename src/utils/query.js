@@ -4,7 +4,7 @@
  * @return {string}
  */
 export const query = queryObj =>
-  Object.keys(queryObj)
+  Object.keys(queryObj ?? {})
     .map(key =>
       key.concat(
         '=',

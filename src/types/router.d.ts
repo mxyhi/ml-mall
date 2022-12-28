@@ -4,11 +4,16 @@ declare module 'vue-router' {
     /**
      * 表示Tabbar是否显示
      */
-    isShowNav: boolean;
+    isShowNav?: boolean;
     /**
      * @description 当前页面标题
      * @default undefined
      */
-    til?: string;
+    title?: string;
+    /**
+     * @description 是否必须登录
+     * @default undefined
+     */
+    login?: boolean;
   }
 }

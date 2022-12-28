@@ -5,19 +5,32 @@ import { ref } from 'vue';
  * 选中index
  */
 const active = ref(0);
+
+const props = defineProps({
+  cartCount: {
+    type: Number,
+    default: null,
+  },
+});
 </script>
 
 <template>
-  <div>
-    <van-tabbar v-model="active" route>
-      <van-tabbar-item icon="home-o" to="/home" replace>首页</van-tabbar-item>
-      <van-tabbar-item icon="balance-list-o" to="/recommend" replace
-        >种草文章</van-tabbar-item
-      >
-      <van-tabbar-item icon="cart-o" to="/cart" replace>购物车</van-tabbar-item>
-      <van-tabbar-item icon="user-o" to="/user" replace>我的</van-tabbar-item>
-    </van-tabbar>
-  </div>
+  <van-tabbar v-model="active" placeholder  route>
+    <van-tabbar-item icon="home-o" to="/home" replace>首页</van-tabbar-item>
+    <van-tabbar-item icon="balance-list-o" to="/recommend" replace
+      >种草文章</van-tabbar-item
+    >
+    <van-tabbar-item icon="cart-o" to="/cart" :badge="$props.cartCount" replace
+      >购物车</van-tabbar-item
+    >
+    <van-tabbar-item icon="user-o" to="/user" replace>我的</van-tabbar-item>
+  </van-tabbar>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+// .van-tabbar {
+//   position: fixed !important;
+//   bottom: 0;
+//   left: 0;
+// }
+</style>

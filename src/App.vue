@@ -1,6 +1,11 @@
 <script setup>
-import { ref, watch } from 'vue';
-import { RouterView ,useRoute} from 'vue-router';
+import { ref, watch, onMounted } from 'vue';
+import { RouterView, useRoute } from 'vue-router';
+import { getToken } from './utils/auth';
+import { useUserStore } from './stores/user';
+import { lastLoginUser } from './utils/userCache';
+import { useCartStore } from './stores/cart';
+import { getUserInfo } from './api/auth';
 import TabBar from './components/TabBar.vue';
 
 /**
@@ -13,6 +18,21 @@ const route = useRoute();
  */
 const isShowNav = ref(false);
 
+const userStore = useUserStore();
+const cartStore = useCartStore();
+const currentUser = lastLoginUser();
+console.log(currentUser);
+
+onMounted(async () => {
+  if (getToken()) {
+    userStore.setInfo(currentUser);
+    const res = await getUserInfo(currentUser);
+    console.log(res);
+  } else {
+    userStore.reset();
+  }
+});
+
 // 监视路由变动，然后控制TabBar组件的存在
 watch(route, newVal => {
   isShowNav.value = newVal.meta.isShowNav;
@@ -20,13 +40,18 @@ watch(route, newVal => {
 </script>
 
 <template>
-  <div id="app">
+  <div class="main">
     <RouterView />
-    <!-- 在TabBar组件上控制 -->
-    <TabBar v-if="isShowNav" />
+    <TabBar
+      v-if="isShowNav"
+      :cart-count="cartStore?.count ? cartStore.count : null"
+    />
   </div>
 </template>
 
 <style lang="scss" scoped>
-
+.main {
+  background: #ededed;
+  height: 100%;
+}
 </style>
