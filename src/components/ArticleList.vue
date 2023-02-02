@@ -13,6 +13,10 @@ const props = defineProps({
     type: Object,
     default: {},
   },
+  status: {
+    type: Number,
+    default: 2,
+  },
 });
 
 const { data, onLoad, loading, finished } = usePageLoad(
@@ -36,12 +40,19 @@ const { data, onLoad, loading, finished } = usePageLoad(
         v-for="article in data"
         :thumb="article.pic_url"
         @click="
-          $router.push({
-            path: '/article-detail',
-            query: {
-              articleId: article.id,
-            },
-          })
+          props.status == 2
+            ? $router.push({
+                path: '/article-detail',
+                query: {
+                  articleId: article.id,
+                },
+              })
+            : $router.push({
+                name:'goodsDetail',
+                params: {
+                  goodsId: article.id,
+                },
+              })
         "
       >
         <template #title>

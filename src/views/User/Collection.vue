@@ -20,6 +20,18 @@ onBeforeUnmount(() => {
 const getCollectListByType = async params => {
   const res = await getCollectionList(params);
   console.log(res.data.list);
+  console.log(active.value);
+  if (active.value == 1) {
+    const dataList = res.data.list;
+    res.data.list = dataList?.map(item => ({
+      ...item,
+      title: item.goods.name,
+      desc: item.goods.price / 100,
+      pic_url: item.goods.picUrl,
+      id: item.object_id,
+    }));
+    return res;
+  }
   const dataList = res.data.list;
   res.data.list = dataList?.map(item => ({
     ...item,
@@ -69,8 +81,9 @@ const onClickTab = async type => {
       ><div class="item-container">
         <ArticleList
           class="list"
+          :status="1"
           :api-fn="getCollectListByType"
-          :params="{ type: 2, page: 1, limit: 20 }"
+          :params="{ type: 1, page: 1, limit: 10 }"
         /></div
     ></van-tab>
     <van-tab name="2" title="文章">
@@ -78,7 +91,7 @@ const onClickTab = async type => {
         <ArticleList
           class="list"
           :api-fn="getCollectListByType"
-          :params="{ type: 2, page: 1, limit: 20 }"
+          :params="{ type: 2, page: 1, limit: 10 }"
         />
       </div>
     </van-tab>

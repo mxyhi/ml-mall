@@ -23,6 +23,7 @@ onMounted(async () => {
   const res = await getGoodsDetail(goodsId);
   goodsDetail.value = res.data;
   console.table(goodsDetail.value);
+  isStar.value = goodsDetail.value.is_collect;
 });
 
 const isStar = ref(false);
@@ -31,20 +32,22 @@ const isStar = ref(false);
  * 收藏事件
  */
 const toggleStar = async goodsInfo => {
-  isStar.value = !isStar.value;
   console.table(goodsInfo);
   if (isStar.value) {
-    const res = await addCollection({ type: 1, object_id: goodsInfo.id });
-    console.log(res);
-    console.log('收藏');
-  } else {
     const res = await deleteCollectionByType({
       type: 1,
       object_id: goodsInfo.id,
     });
     console.log(res);
-    console.log('取消收藏');
+    console.log('💔');
+  } else {
+    const res = await addCollection({ type: 1, object_id: goodsInfo.id });
+    console.log(res);
+    console.log('💖');
   }
+  const res = await getGoodsDetail(goodsId);
+  goodsDetail.value = res.data;
+  isStar.value = goodsDetail.value.is_collect;
 };
 
 /**

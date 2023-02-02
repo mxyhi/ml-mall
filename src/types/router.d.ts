@@ -3,6 +3,7 @@ declare module 'vue-router' {
   interface RouteMeta {
     /**
      * 表示Tabbar是否显示
+     * @default undefined
      */
     isShowNav?: boolean;
     /**
