@@ -1,1 +1,0 @@
-import{P as e,T as t}from"./user-29809695.js";const d=r=>e({method:"POST",url:"/frontend/order/list/".concat("?",t(r))}),a=r=>e({method:"POST",url:"/frontend/order/add/",data:JSON.stringify(r)});export{a as c,d as g};

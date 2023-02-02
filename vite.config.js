@@ -24,7 +24,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: 'ml-mall',
+    // outDir: 'ml-mall',
     // rollupOptions: {
     //   output: {
     //     sanitizeFileName(fileName) {
