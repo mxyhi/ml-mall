@@ -132,9 +132,6 @@ const onSubmit = async formData => {
               },
             ]"
           />
-          <van-uploader>
-            <van-button icon="plus" type="primary">上传头像</van-button>
-          </van-uploader>
           <van-field
             v-if="isRegistered"
             v-model.lazy.trim="userInfo.avatar"
