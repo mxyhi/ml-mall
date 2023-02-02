@@ -14,7 +14,7 @@ export const setData = (key, value) =>
 
 export const deleteData = key => localStorage.removeItem(`${keyword}-${key}`);
 
-export const lastLoginUser = _ => {
+export const lastLoginUser = () => {
   const uname = Object.keys(localStorage)
     .filter(it => it.startsWith(keyword))
     .find(it => getData(it?.replace?.(`${keyword}-`, '')).lastLogin)
@@ -24,7 +24,7 @@ export const lastLoginUser = _ => {
   return userInfo;
 };
 
-export const resetLogin = _ =>
+export const resetLogin = () =>
   Object.keys(localStorage)
     .filter(it => it.startsWith(keyword))
     .forEach(it => {

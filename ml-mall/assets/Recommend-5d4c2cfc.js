@@ -1,1 +1,0 @@
-import{L as t,S as o,A as a,o as n,E as c}from"./user-0dd1e069.js";const s=e=>t({method:"POST",url:"/frontend/article/list".concat("?",o(e))}),m={__name:"Recommend",setup(e){return a(async()=>{console.log(await s({limit:10,page:1}))}),(r,l)=>(n(),c("div",null,"种草文章"))}};export{m as default};

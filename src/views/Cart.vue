@@ -3,6 +3,9 @@ import { useCartStore } from '@/stores/cart';
 import { deleteCart, editCart } from '@/api/cart';
 import { ref, computed } from 'vue';
 import { getToken } from '@/utils/auth';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const cartStore = useCartStore();
 console.table(cartStore.data);
@@ -10,6 +13,19 @@ const isLogin = ref(false);
 if (getToken()) {
   isLogin.value = true;
 }
+
+const selectedAll = computed({
+  get: () => cartStore.data?.every?.(it => it.checked),
+  set: val => {
+    cartStore.data.forEach?.(it => {
+      it.checked = val;
+    });
+  },
+});
+
+const changeSelected = () => {
+  selectedAll.value = cartStore.data?.every?.(it => it.checked);
+};
 
 const totalPrice = computed(() =>
   cartStore?.data
@@ -19,7 +35,7 @@ const totalPrice = computed(() =>
 
 const deleteGoods = async id => {
   console.log(id);
-  const res = await deleteCart(id);
+  const res = await deleteCart([id]);
   console.log(res);
   if (res.code === 1) {
     cartStore.changeCart();
@@ -34,9 +50,27 @@ const changeGoodsSum = async ({ goods_id, id, count }) => {
   }
 };
 
-const onSubmit = form => {
-  console.log(form);
-  console.log(totalPrice.value);
+const onSubmit = () => {
+  const goods = cartStore.data
+    .filter?.(it => it.checked)
+    .map(it => ({
+      goods_id: it.goods_id,
+      count: it.count,
+      cartId: it.id,
+      goodsInfo: it.goods_info,
+    }));
+  if (goods.length > 0) {
+    console.table(goods);
+    console.log(totalPrice.value);
+    router.push({
+      name: 'addressList',
+      query: {
+        orderInfo: btoa(
+          encodeURI(JSON.stringify({ goods, price: totalPrice.value }))
+        ),
+      },
+    });
+  }
 };
 </script>
 
@@ -50,15 +84,24 @@ const onSubmit = form => {
       @click-left="$router.back()"
     />
     <main v-if="isLogin" class="content">
-      <div class="goods_list" v-if="cartStore.data?.length > 0">
+      <van-list
+        class="goods_list"
+        v-if="cartStore.data?.length > 0"
+        finished-text="没有更多了"
+        offset
+      >
         <van-swipe-cell class="goods_item" v-for="it in cartStore.data">
-          <van-checkbox class="selected" v-model="it.checked" />
+          <van-checkbox
+            class="selected"
+            v-model="it.checked"
+            @select="changeSelected"
+          />
           <div class="goods_box">
             <van-card
               class="goods_card"
               :key="it.id"
               :num="it.count"
-              :price="(it.goods_info.price * it.count).toFixed(2)"
+              :price="((it.goods_info.price / 100) * it.count).toFixed(2)"
               :desc="it.goods_info.detail_info"
               :title="it.goods_info.name"
               :thumb="it.goods_info.pic_url"
@@ -81,7 +124,7 @@ const onSubmit = form => {
             />
           </template>
         </van-swipe-cell>
-      </div>
+      </van-list>
       <div class="is_null" v-else>
         <van-icon name="smile-o" size="50px" />
         <p class="cart_tip">购物车空空空如也</p>
@@ -99,13 +142,15 @@ const onSubmit = form => {
       </van-empty>
     </div>
     <van-submit-bar
-      v-if="isLogin"
+      v-if="isLogin && cartStore.data?.length > 0"
       class="submit"
-      :price="(totalPrice ? totalPrice : 0) * 100"
+      :price="totalPrice"
       button-text="提交订单"
       @submit="onSubmit"
-    />
-    <van-back-top right="20px" bottom="60px" />
+    >
+      <van-checkbox v-model="selectedAll">全选</van-checkbox>
+    </van-submit-bar>
+    <van-back-top v-if="isLogin" right="20px" bottom="4rem" />
   </main>
 </template>
 
@@ -126,7 +171,7 @@ const onSubmit = form => {
           top: 58px;
         }
         .goods_box {
-          background: #F7F8FA;
+          background: #f7f8fa;
           margin-top: 10px;
           .goods_card {
             margin-left: 30px;

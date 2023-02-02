@@ -20,9 +20,24 @@ export const addCollection = info =>
 
 /**
  * @description 删除收藏
- * @param {{id: string}} info
+ * @param {string} id
  */
-export const deleteCollection = info =>
+export const deleteCollectionById = id =>
+  request({
+    method: 'POST',
+    url: '/frontend/collection/delete/',
+    data: (() => {
+      const formData = new FormData();
+      formData.set('id', id);
+      return formData;
+    })(),
+  });
+
+/**
+ * @description 删除收藏
+ * @param {{type: string,object_id:string}} info
+ */
+export const deleteCollectionByType = info =>
   request({
     method: 'POST',
     url: '/frontend/collection/delete/',
@@ -42,5 +57,6 @@ export const deleteCollection = info =>
 export const getCollectionList = queryObj =>
   request({
     method: 'POST',
-    url: '/frontend/collection/list/'.concat('?', query(queryObj)),
+    url: '/frontend/collection/list/',
+    params: queryObj,
   });

@@ -5,6 +5,8 @@ import router from '@/router';
 import { resetLogin } from './userCache';
 import { useUserStore } from '@/stores/user';
 import { useCartStore } from '@/stores/cart';
+// Notify
+import 'vant/es/notify/style';
 
 const request = axios.create({
   /**
@@ -39,7 +41,7 @@ request.interceptors.response.use(
         // 代表未登录
         // 如果当前路径就是/login 又去使用push 就会报重复跳转的错误
         if (router.currentRoute.value.path !== '/login') {
-          router.replace('/login');
+          router.push('/login');
         }
       }
       if (data.code === 3) {

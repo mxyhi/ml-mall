@@ -15,7 +15,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <van-tabbar v-model="active" placeholder  route>
+  <van-tabbar v-model="active" placeholder route>
     <van-tabbar-item icon="home-o" to="/home" replace>首页</van-tabbar-item>
     <van-tabbar-item icon="balance-list-o" to="/recommend" replace
       >种草文章</van-tabbar-item
@@ -27,10 +27,4 @@ const props = defineProps({
   </van-tabbar>
 </template>
 
-<style lang="scss" scoped>
-// .van-tabbar {
-//   position: fixed !important;
-//   bottom: 0;
-//   left: 0;
-// }
-</style>
+<style lang="scss" scoped></style>

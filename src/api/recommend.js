@@ -2,13 +2,18 @@ import { query } from '@/utils/query';
 import request from '@/utils/request';
 
 /**
- * @description
+ * @description 文章列表
  * @param {{limit:number,page:number}} queyObj
  */
-export const articleList = queyObj =>
+export const getArticleList = (queyObj, id) =>
   request({
     method: 'POST',
     url: '/frontend/article/list'.concat('?', query(queyObj)),
+    data: (async () => {
+      const data = new FormData();
+      data.set('id', id);
+      return data;
+    })(),
   });
 
 /**
@@ -26,4 +31,20 @@ export const addArticle = articleInfo =>
       );
       return formData;
     })(),
+  });
+
+/**
+ * @description 我的文章列表
+ * @param {{limit:number,page:number}} queyObj
+ */
+export const myArticleList = queyObj =>
+  request({
+    method: 'POST',
+    url: '/frontend/article/list'.concat('?', query(queyObj)),
+  });
+
+export const getArticleInfo = id =>
+  request({
+    method: 'POST',
+    url: '/frontend/article/detail/'.concat('?', query({ id })),
   });

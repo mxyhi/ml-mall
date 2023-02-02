@@ -47,15 +47,13 @@ export const editCart = form =>
 
 /**
  * @description 删除购物车商品
- * @param {string} id
+ * @param {string[]} ids
  */
-export const deleteCart = id =>
+export const deleteCart = ids =>
   request({
     method: 'POST',
     url: '/frontend/cart/delete/',
-    data: (() => {
-      const formData = new FormData();
-      formData.append('id', id);
-      return formData;
-    })(),
+    data: {
+      ids,
+    },
   });

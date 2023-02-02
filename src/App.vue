@@ -40,18 +40,11 @@ watch(route, newVal => {
 </script>
 
 <template>
-  <div class="main">
-    <RouterView />
-    <TabBar
-      v-if="isShowNav"
-      :cart-count="cartStore?.count ? cartStore.count : null"
-    />
-  </div>
+  <RouterView />
+  <TabBar
+    v-if="isShowNav"
+    :cart-count="cartStore?.count ? cartStore.count : null"
+  />
 </template>
 
-<style lang="scss" scoped>
-.main {
-  background: #ededed;
-  height: 100%;
-}
-</style>
+<style lang="scss" scoped></style>

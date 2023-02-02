@@ -80,7 +80,7 @@ const onSave = async info => {
       });
     }
   }
-  router.replace('/address-list');
+  router.replace({path:'/address-list',query:{orderInfo:route.query.orderInfo}});
 };
 
 const onDelete = async info => {
@@ -93,7 +93,7 @@ const onDelete = async info => {
       message: '删除成功',
       duration: 1500,
     });
-    router.replace('/address-list');
+    router.replace({path:'/address-list',query:{orderInfo:route.query.orderInfo}});
   }
 };
 </script>
@@ -105,7 +105,7 @@ const onDelete = async info => {
       placeholder
       fixed
       left-arrow
-      @click-left="$router.back()"
+      @click-left="$router.replace({path:'/address-list',query:{orderInfo:route.query.orderInfo}})"
     />
     <van-address-edit
       :address-info="addressList"

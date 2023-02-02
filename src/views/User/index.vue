@@ -66,7 +66,16 @@ const logOut = async _ => {
           <p class="user_sex">{{ userStore.sex ? '男' : '女' }}</p>
         </template>
       </van-card>
-      <van-cell icon="logistics" title="我的收货地址" is-link to="/address-list" />
+      <van-cell
+        icon="logistics"
+        title="我的收货地址"
+        is-link
+        to="/address-list"
+      />
+      <van-cell icon="orders-o" title="我的订单" is-link to="/order" />
+      <van-cell icon="description" title="我的文章" is-link to="/my-article" />
+      <van-cell icon="star-o" title="我的收藏" is-link to="/my-collection" />
+      <van-cell icon="good-job-o" title="我的点赞" is-link to="/thumbs-up" />
       <div class="logout_box">
         <van-button
           v-if="isLogin"

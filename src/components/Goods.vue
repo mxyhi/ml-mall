@@ -27,10 +27,7 @@ const props = defineProps({
         <div class="good-desc">
           <div class="title">{{ item.name }}</div>
           <div class="price">
-            {{
-              /* 保留两位小数 */
-              item.price.toFixed(2)
-            }}
+            {{ (item.price / 100).toFixed(2) }}
           </div>
         </div>
       </router-link>

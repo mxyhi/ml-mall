@@ -1,4 +1,4 @@
-import Home from '@/views/Home.vue';
+import Home from '@/views/Home/index.vue';
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { getToken } from '@/utils/auth';
 import NProgress from 'nprogress'; // progress bar
@@ -25,9 +25,11 @@ const router = createRouter({
     {
       path: '/recommend',
       name: 'recommend',
-      component: () => import('@/views/Recommend.vue'),
+      component: () => import('@/views/Recommend/index.vue'),
       meta: {
         isShowNav: true,
+        login: true,
+        title: '种草推荐',
       },
     },
     {
@@ -46,6 +48,95 @@ const router = createRouter({
       meta: {
         isShowNav: true,
         title: '我的',
+      },
+    },
+    {
+      path: '/goods/:goodsId',
+      name: 'goodsDetail',
+      component: () => import('@/views/Home/GoodsDetail.vue'),
+      meta: {
+        title: '商品详情',
+      },
+    },
+
+    {
+      path: '/edit-address',
+      name: 'edit',
+      component: () => import('@/views/Address/Edit.vue'),
+      meta: {
+        login: true,
+        title: '编辑',
+      },
+    },
+    {
+      path: '/create-order',
+      name: 'createOrder',
+      component: () => import('@/views/Order/Create.vue'),
+      meta: {
+        title: '生成订单',
+        login: true,
+      },
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/User/Login.vue'),
+      meta: {
+        title: '登录',
+      },
+    },
+    {
+      path: '/order',
+      name: 'order',
+      component: () => import('@/views/Order/index.vue'),
+      meta: {
+        title: '我的订单',
+        login: true,
+      },
+    },
+    {
+      path: '/thumbs-up',
+      name: 'ThumbsUp',
+      component: () => import('@/views/User/ThumbsUp.vue'),
+      meta: {
+        title: '我的点赞',
+        login: true,
+      },
+    },
+    {
+      path: '/article-detail',
+      name: 'articleDetail',
+      component: () => import('@/views/Recommend/Detail.vue'),
+      meta: {
+        login: true,
+        title: '文章详情',
+      },
+    },
+    {
+      path: '/add-article',
+      name: 'addArticle',
+      component: () => import('@/views/Recommend/Create.vue'),
+      meta: {
+        login: true,
+        title: '新增文章',
+      },
+    },
+    {
+      path: '/my-article',
+      name: 'myArticle',
+      component: () => import('@/views/Recommend/MyArticle.vue'),
+      meta: {
+        login: true,
+        title: '我的文章',
+      },
+    },
+    {
+      path: '/my-collection',
+      name: 'myCollection',
+      component: () => import('@/views/User/Collection.vue'),
+      meta: {
+        login: true,
+        title: '我的收藏',
       },
     },
     {
@@ -75,29 +166,6 @@ const router = createRouter({
         title: '收货地址',
       },
     },
-    {
-      path: '/edit-address',
-      name: 'edit',
-      component: () => import('@/views/Address/Edit.vue'),
-      meta: {
-        login: true,
-        title: "编辑",
-      },
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: () => import('@/views/User/Login.vue'),
-      meta: {
-        title: '登录',
-      },
-    },
-    {
-      path: '/goods/:goodsId',
-      name: 'goodsDetail',
-      component: () => import('@/views/GoodsDetail.vue'),
-      meta: {},
-    },
     // 访问没有的路由直接跳往首页
     {
       path: '/:toHome*',
@@ -118,11 +186,10 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     if (to.meta.login) {
-      next({ path: '/login' });
-      return;
+      return next({ path: '/login' });
     }
   }
-  next();
+  return next();
 });
 
 router.afterEach(() => {

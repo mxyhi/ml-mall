@@ -14,7 +14,7 @@ const getUserInfo = () => ({
   avatar: avatarUrl,
   username: '',
   password: '',
-  sex: '1',
+  sex: 1,
   sign: '',
   secretAnswer: '',
 });
@@ -93,7 +93,7 @@ const onSubmit = async formData => {
     <van-nav-bar
       :title="isRegistered ? '注册' : $route.meta.title"
       left-arrow
-      @click-left="$router.back()"
+      @click-left="$router.replace('/home')"
       fixed
     />
     <div class="container">
@@ -121,6 +121,7 @@ const onSubmit = async formData => {
             v-model.lazy.trim="userInfo.password"
             type="password"
             name="password"
+            autocomplete
             label="密码"
             placeholder="密码"
             :rules="[
@@ -147,11 +148,11 @@ const onSubmit = async formData => {
               },
             ]"
           />
-          <van-field v-if="isRegistered" name="radio" label="性别">
+          <van-field v-if="isRegistered" name="sex" label="性别">
             <template #input>
               <van-radio-group v-model="userInfo.sex" direction="horizontal">
-                <van-radio name="1">男</van-radio>
-                <van-radio name="0">女</van-radio>
+                <van-radio :name="1">男</van-radio>
+                <van-radio :name="0">女</van-radio>
               </van-radio-group>
             </template>
           </van-field>
