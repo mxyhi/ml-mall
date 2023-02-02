@@ -10,7 +10,7 @@ module.exports = {
       propList: ['*'],
     },
     /**
-     * 自动配置浏览器样式
+     * 自动适配浏览器
      */
     'postcss-preset-env': {},
   },

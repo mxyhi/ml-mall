@@ -26,7 +26,7 @@ const getCollectListByType = async params => {
     res.data.list = dataList?.map(item => ({
       ...item,
       title: item.goods.name,
-      desc: item.goods.price / 100,
+      desc: (item.goods.price / 100).toFixed(2),
       pic_url: item.goods.picUrl,
       id: item.object_id,
     }));

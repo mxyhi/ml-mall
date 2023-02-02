@@ -21,3 +21,14 @@ export const createOrder = info =>
     url: '/frontend/order/add/',
     data: JSON.stringify(info),
   });
+
+/**
+ * @description
+ * @param {{id: string,pay_type:string,pay_at:string,status:string}} info
+ */
+export const editOrderStatus = info =>
+  request({
+    method: 'POST',
+    url: '/frontend/order/add/',
+    data: JSON.stringify(info),
+  });
