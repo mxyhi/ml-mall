@@ -1,0 +1,1 @@
+import{N as e,S as t}from"./user-867e849d.js";const d=r=>e({method:"POST",url:"/frontend/order/list/".concat("?",t(r))}),a=r=>e({method:"POST",url:"/frontend/order/add/",data:JSON.stringify(r)});export{a as c,d as g};

@@ -9,13 +9,15 @@ const getCattleListByType = async params => {
   const res = await getCattleByType(params);
   console.log(res.data.list);
   const dataList = res.data.list;
-  res.data.list = dataList?.map(item => ({
-    ...item,
-    title: item.article.title,
-    desc: item.article.desc,
-    pic_url: item.article.picUrl,
-    id: item.object_id,
-  }));
+  res.data.list = dataList
+    ?.map(item => ({
+      ...item,
+      title: item.article.title,
+      desc: item.article.desc,
+      pic_url: item.article.picUrl,
+      id: item.object_id,
+    }))
+    .reverse();
   return res;
 };
 
